@@ -18,3 +18,13 @@ This approach helps mitigate potential data loss or interruptions caused by netw
 # Process
 
 In Node.js, the process object is a global object provided by the Node.js runtime environment. It provides information and control over the current Node.js process. Some of the commonly used properties and methods of the process
+
+# "Managing Cookies in Express: Simplified CRUD Operations"
+
+1.Accessing Cookies from Server: You can read cookies sent by the user's browser.
+
+2.Setting Cookies from Server: You can send new or updated cookies back to the browser.
+
+3.CRUD Operations on Cookies: You can create, read, update, or delete cookies from the server.
+
+4.Secure Cookies: You can make cookies secure so only the server can access or delete them.

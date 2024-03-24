@@ -16,6 +16,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // return res
 
   const { fullName, email, password, username } = req.body
+  console.log("req.body", req.body)
 
   if (
     [fullName, email, password, username].some((field) => field?.trim() === " ")
@@ -32,10 +33,19 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "Username or Email already exist")
   }
   //Multer Gives access to req.files to handle images and avtar
-  console.log(req.files)
+  console.log("req.files", req.files)
   // On the server till , not went on cloudinary
   const avtarLocalPath = req.files?.avtar[0].path
-  const coverimageLocalPath = req.files.coverImage[0]?.path
+  // const coverimageLocalPath = req.files.coverImage[0]?.path
+  let coverimageLocalPath
+
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverimageLocalPath = req.files.coverImage[0]?.path
+  }
 
   if (!avtarLocalPath) {
     throw new ApiError(400, "Avtar file is required")
@@ -67,7 +77,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "User registered successfully"))
+    .json(new ApiResponse(200, createdUser, "User registered Successfully"))
 })
 
 export { registerUser }

@@ -52,3 +52,20 @@ Bearer Token JWT is a JWT used as an access token in token-based authentication 
 # schema.methods
 
 In Mongoose, schema.methods is a property that allows you to add custom instance methods to your Mongoose model. Instance methods are methods that are available on individual documents created from your model. These methods are useful for performing operations specific to individual documents, such as manipulating data, performing calculations, or interacting with related documents.
+
+# Multer
+
+We're using multer middleware to handle file uploads. The uploaded files are temporarily stored in the 'uploads/' directory on the local server.
+
+When a file is uploaded, we first store it temporarily on the local server (Step 1).
+
+Then, we use the Cloudinary SDK to upload the file to Cloudinary (Step 2).
+
+After the file is successfully uploaded to Cloudinary, we delete the temporary file from the local server using fs.unlinkSync(localFilePath).
+
+Finally, we send a response with the Cloudinary upload response to the client.
+
+# Route declaration
+
+app.use("api/v1/users", userRouter)
+When request goes to any URL and if the prefix of url will be the first arg we are passing (for ex. "api/v1/users") then the control will be taken by userRouter which is passed as a second argument.

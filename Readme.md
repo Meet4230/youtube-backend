@@ -69,3 +69,16 @@ Finally, we send a response with the Cloudinary upload response to the client.
 
 app.use("api/v1/users", userRouter)
 When request goes to any URL and if the prefix of url will be the first arg we are passing (for ex. "api/v1/users") then the control will be taken by userRouter which is passed as a second argument.
+
+# some facts
+
+When in Controlers we req.body from user that not present in user schema , so in this scenario backend is asking for help from frontend , so what backend req.body that not present in schema that developer needs to send in body while hitting the endpoint.
+For example: change password , where backend request for old password and new password from the user to comapsre the password which is store in database and change the password.
+
+# { new: true }
+
+In Mongoose, { new: true } is an option that you can pass to the findOneAndUpdate() or findByIdAndUpdate() methods. Here's what it does:
+
+Returning the Updated Document: By default, when you use findOneAndUpdate() or findByIdAndUpdate() to update a document in MongoDB, Mongoose returns the original document (the document as it was before the update) unless you specify otherwise.
+
+{ new: true } to the Rescue: If you include { new: true } as an option, Mongoose will return the modified document rather than the original one. This means that after the update operation is performed, the method will return the document as it is after the modifications have been applied.

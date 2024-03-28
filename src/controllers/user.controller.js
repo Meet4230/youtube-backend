@@ -326,6 +326,60 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
   return res.status(200).json(200, user, "coverImage updated Successfully")
 })
 
+const getWatchHistory = asyncHandler(async (req, res) => {
+  const user = await User.aggregate([
+    {
+      $match: {
+        _id: new Mongoose.Types.ObjectId(req.user._id),
+      },
+    },
+    {
+      $lookup: {
+        from: "videos",
+        foreignField: "_id",
+        localField: "watchHistory",
+        as: "watchHistory",
+        pipeline: [
+          {
+            $lookup: {
+              from: "users",
+              foreignField: "_id",
+              localField: "owner",
+              as: "owner",
+              pipeline: [
+                {
+                  $project: {
+                    fullName: 1,
+                    username: 1,
+                    avtar: 1,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $addFields: {
+              owner: {
+                $first: "$owner",
+              },
+            },
+          },
+        ],
+      },
+    },
+  ])
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        user.watchHistory[0],
+        "WatchHistory fetched successfully"
+      )
+    )
+})
+
 export {
   registerUser,
   loginUser,
@@ -336,4 +390,5 @@ export {
   updateAcountDetails,
   updateUserAvtar,
   updateUserCoverImage,
+  getWatchHistory,
 }

@@ -4,6 +4,7 @@ import { User } from "../models/user.models.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken"
+import { mongoose } from "mongoose"
 
 const generateAcessAndRefreshToken = async (userId) => {
   try {
@@ -158,8 +159,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined,
+      $unset: {
+        refreshToken: 1,
       },
     },
     {
@@ -399,7 +400,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
   const user = await User.aggregate([
     {
       $match: {
-        _id: new Mongoose.Types.ObjectId(req.user._id),
+        _id: new mongoose.Types.ObjectId(req.user._id),
       },
     },
     {
@@ -443,7 +444,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        user.watchHistory[0],
+        user[0].watchHistory,
         "WatchHistory fetched successfully"
       )
     )

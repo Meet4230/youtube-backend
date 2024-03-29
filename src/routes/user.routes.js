@@ -33,9 +33,9 @@ router.route("/login").post(loginUser)
 // Secured routes
 router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/refreshtoken").post(refreshAccessToken)
-router.route("/change-password").post(changeCurrentPasswordrd)
-router.route("/current-user").post(verifyJWT, getCurrentUseretCurrentUser)
-router.route("/update-account").patch(verifyJWT, updateAcountDetailsuntDetails)
+router.route("/change-password").post(changeCurrentPassword)
+router.route("/current-user").post(verifyJWT, getCurrentUser)
+router.route("/update-account").patch(verifyJWT, updateAcountDetails)
 router.route("/avtar").patch(verifyJWT, upload.single("avtar"), updateUserAvtar)
 router
   .route("/cover-image")

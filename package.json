@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config --experimental-json-modules  src/index.js"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules  src/index.js",
+    "build": "rimraf dist && mkdir dist && xcopy /E /I src dist\\src && copy package*.json dist\\ && copy .env dist\\"
   },
   "keywords": [
     "express",
@@ -15,7 +16,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
